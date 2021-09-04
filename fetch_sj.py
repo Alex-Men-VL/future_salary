@@ -27,7 +27,8 @@ def get_sj_vacancies(lang, page, api_key):
 def predict_rub_salary_sj(vacancy):
     salary = (vacancy['payment_from'], vacancy['payment_to'])
     if any(salary) and vacancy['currency'] == 'rub':
-        return predict_salary(salary[0], salary[1])
+        salary_from, salary_to = salary[0], salary[1]
+        return predict_salary(salary_from, salary_to)
     return None
 
 
