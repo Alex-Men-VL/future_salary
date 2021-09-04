@@ -28,30 +28,37 @@ def predict_rub_salary_hh(vacancy):
     return None
 
 
+def get_lang_statistic(lang):
+    page = 0
+    pages_number = 1
+    average_salaries = 0
+    vacancies_processed = 0
+    while page < pages_number:
+        lang_vacancies = get_hh_vacancies(lang, page)
+
+        pages_number = lang_vacancies['pages']
+        vacancies_found = lang_vacancies['found']
+        vacancies = lang_vacancies['items']
+        for vacancy in vacancies:
+            salary = predict_rub_salary_hh(vacancy)
+            if salary:
+                average_salaries += salary
+                vacancies_processed += 1
+        page += 1
+
+    try:
+        average_salary = average_salaries // vacancies_processed
+    except ZeroDivisionError:
+        average_salary = 0
+
+    return vacancies_found, vacancies_processed, average_salary
+
+
 def get_hh_statistics(languages):
     statistics = {}
     for lang in languages:
-        page = 0
-        pages_number = 1
-        average_salaries = 0
-        vacancies_processed = 0
-        while page < pages_number:
-            lang_vacancies = get_hh_vacancies(lang, page)
-
-            pages_number = lang_vacancies['pages']
-            vacancies_found = lang_vacancies['found']
-            vacancies = lang_vacancies['items']
-            for vacancy in vacancies:
-                salary = predict_rub_salary_hh(vacancy)
-                if salary:
-                    average_salaries += salary
-                    vacancies_processed += 1
-            page += 1
-
-        try:
-            average_salary = average_salaries // vacancies_processed
-        except ZeroDivisionError:
-            average_salary = 0
+        vacancies_found, vacancies_processed, average_salary = \
+            get_lang_statistic(lang)
 
         statistics[lang] = {
             "vacancies_found": vacancies_found,
