@@ -48,18 +48,18 @@ def main():
     ]
 
     try:
-        statistics_from_hh = get_hh_statistics(languages)
+        hh_statistics = get_hh_statistics(languages)
     except (ConnectionError, InvalidURL, HTTPError) as error:
         logging.error(f"{error}\nCan't get data from hh.ru.")
 
     try:
-        statistics_from_sj = get_sj_statistics(languages, api_key)
+        sj_statistics = get_sj_statistics(languages, api_key)
     except (ConnectionError, InvalidURL, HTTPError) as error:
         logging.error(f"{error}\nCan't get data from superjob.ru.")
 
     site_to_statistics = {
-        'HeadHunter': statistics_from_hh,
-        'SuperJob': statistics_from_sj,
+        'HeadHunter': hh_statistics,
+        'SuperJob': sj_statistics,
     }
 
     for site, statistics in site_to_statistics.items():
