@@ -27,7 +27,7 @@ def make_table(site, statistics):
         table_data.append(lang_info)
     title = f'{site} Moscow'
     table_instance = AsciiTable(table_data, title)
-    print(table_instance.table)
+    return table_instance.table
 
 
 def main():
@@ -63,7 +63,8 @@ def main():
     }
 
     for site, statistics in site_to_statistics.items():
-        make_table(site, statistics)
+        langs_statistics_table = make_table(site, statistics)
+        print(langs_statistics_table)
 
 
 if __name__ == '__main__':
