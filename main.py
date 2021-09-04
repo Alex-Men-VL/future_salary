@@ -16,13 +16,13 @@ def make_table(site, statistics):
             'Вакансий обработано',
             'Средняя зарплата',
         ),
-    )
-    for lang in statistics:
+    ]
+    for lang, info in statistics.items():
         lang_info = (
             lang,
-            statistics[lang]['vacancies_found'],
-            statistics[lang]['vacancies_processed'],
-            statistics[lang]['average_salary'],
+            info['vacancies_found'],
+            info['vacancies_processed'],
+            info['average_salary'],
         )
         TABLE_DATA = (*TABLE_DATA, lang_info)
     title = f'{site} Moscow'
@@ -62,8 +62,8 @@ def main():
         'SuperJob': statistics_from_sj,
     }
 
-    for site in site_to_statistics:
-        make_table(site, site_to_statistics[site])
+    for site, statistics in site_to_statistics.items():
+        make_table(site, statistics)
 
 
 if __name__ == '__main__':
