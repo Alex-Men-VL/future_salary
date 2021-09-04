@@ -51,6 +51,7 @@ def get_lang_statistic(lang, api_key):
             if salary:
                 average_salaries += salary
                 vacancies_processed += 1
+        page += 1
 
     try:
         average_salary = average_salaries // vacancies_processed
