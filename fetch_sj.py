@@ -35,19 +35,19 @@ def get_sj_statistics(languages, api_key):
     statistics = {}
     for lang in languages:
         page = 0
-        average_salary = 0
+        average_salaries = 0
         vacancies_processed = 0
         while True:
             lang_vacancies = get_sj_vacancies(lang, page, api_key)
 
-            vacancies_quantity = lang_vacancies['total']
+            vacancies_found = lang_vacancies['total']
             other_pages = lang_vacancies['more']
 
             vacancies = lang_vacancies['objects']
             for vacancy in vacancies:
                 salary = predict_rub_salary_sj(vacancy)
                 if salary:
-                    average_salary += salary
+                    average_salaries += salary
                     vacancies_processed += 1
 
             if other_pages:
@@ -55,9 +55,14 @@ def get_sj_statistics(languages, api_key):
             else:
                 break
 
+        try:
+            average_salary = average_salaries // vacancies_processed
+        except ZeroDivisionError:
+            average_salary = 0
+
         statistics[lang] = {
-            "vacancies_found": vacancies_quantity,
+            "vacancies_found": vacancies_found,
             "vacancies_processed": vacancies_processed,
-            "average_salary": average_salary // vacancies_processed,
+            "average_salary": average_salary,
         }
     return statistics

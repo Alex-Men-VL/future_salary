@@ -47,20 +47,18 @@ def main():
         'Rust',
     ]
 
+    site_to_statistics = {}
     try:
         hh_statistics = get_hh_statistics(languages)
+        site_to_statistics['HeadHunter'] = hh_statistics
     except (ConnectionError, InvalidURL, HTTPError) as error:
         logging.error(f"{error}\nCan't get data from hh.ru.")
 
     try:
         sj_statistics = get_sj_statistics(languages, api_key)
+        site_to_statistics['SuperJob'] = sj_statistics
     except (ConnectionError, InvalidURL, HTTPError) as error:
         logging.error(f"{error}\nCan't get data from superjob.ru.")
-
-    site_to_statistics = {
-        'HeadHunter': hh_statistics,
-        'SuperJob': sj_statistics,
-    }
 
     for site, statistics in site_to_statistics.items():
         langs_statistics_table = make_table(site, statistics)

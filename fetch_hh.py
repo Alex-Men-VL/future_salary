@@ -33,24 +33,29 @@ def get_hh_statistics(languages):
     for lang in languages:
         page = 0
         pages_number = 1
-        average_salary = 0
+        average_salaries = 0
         vacancies_processed = 0
         while page < pages_number:
             lang_vacancies = get_hh_vacancies(lang, page)
 
             pages_number = lang_vacancies['pages']
-            vacancies_quantity = lang_vacancies['found']
+            vacancies_found = lang_vacancies['found']
             vacancies = lang_vacancies['items']
             for vacancy in vacancies:
                 salary = predict_rub_salary_hh(vacancy)
                 if salary:
-                    average_salary += salary
+                    average_salaries += salary
                     vacancies_processed += 1
             page += 1
 
+        try:
+            average_salary = average_salaries // vacancies_processed
+        except ZeroDivisionError:
+            average_salary = 0
+
         statistics[lang] = {
-            "vacancies_found": vacancies_quantity,
+            "vacancies_found": vacancies_found,
             "vacancies_processed": vacancies_processed,
-            "average_salary": average_salary // vacancies_processed,
+            "average_salary": average_salary,
         }
     return statistics
