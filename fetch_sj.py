@@ -7,16 +7,19 @@ from predict_salary import predict_salary
 def get_sj_vacancies(lang, page, api_key):
     sj_url = 'https://api.superjob.ru/2.33/vacancies'
     date_interval = datetime.datetime.now() - datetime.timedelta(days=30)
+    town_id = 4
+    specialization_id = 48
+
     headers = {
         'X-Api-App-Id': api_key,
     }
     params = {
-        'catalogues': 48,
+        'catalogues': specialization_id,
         'count': 100,
         'date_published_from': date_interval.strftime('%Y-%m-%d'),
         'keywords': f'Программист {lang}',
         'page': page,
-        'town': 4,
+        'town': town_id,
     }
     response = requests.get(sj_url, headers=headers, params=params)
     response.raise_for_status()

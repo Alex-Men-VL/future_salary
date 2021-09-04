@@ -7,12 +7,15 @@ from predict_salary import predict_salary
 def get_hh_vacancies(lang, page):
     hh_url = 'https://api.hh.ru/vacancies'
     date_interval = datetime.datetime.now() - datetime.timedelta(days=30)
+    town_id = 1
+    specialization_id = 1.221
+
     params = {
-        'area': 1,
+        'area': town_id,
         'date_from': date_interval.strftime('%Y-%m-%d'),
         'page': page,
         'per_page': 100,
-        'specialization': 1.221,
+        'specialization': specialization_id,
         'text': f'Программист {lang}',
     }
     response = requests.get(hh_url, params=params)
