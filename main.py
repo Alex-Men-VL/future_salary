@@ -9,7 +9,7 @@ from terminaltables import AsciiTable
 
 
 def make_table(site, statistics):
-    TABLE_DATA = (
+    table_data = [
         (
             'Язык программирования',
             'Вакансий найдено',
@@ -24,9 +24,9 @@ def make_table(site, statistics):
             info['vacancies_processed'],
             info['average_salary'],
         )
-        TABLE_DATA = (*TABLE_DATA, lang_info)
+        table_data.append(lang_info)
     title = f'{site} Moscow'
-    table_instance = AsciiTable(TABLE_DATA, title)
+    table_instance = AsciiTable(table_data, title)
     print(table_instance.table)
 
 
