@@ -1,5 +1,5 @@
 def predict_salary(salary_from, salary_to):
-    if all((salary_from, salary_to)):
+    if salary_from and salary_to:
         average_salary = (salary_from + salary_to) / 2
     elif salary_from:
         average_salary = salary_from * 1.2
