@@ -38,7 +38,7 @@ def predict_rub_salary_sj(vacancy):
 def get_lang_statistic(lang, api_key):
     page = 0
     other_pages = True
-    average_salaries = 0
+    average_salaries_amount = 0
     vacancies_processed = 0
     while other_pages:
         lang_vacancies = get_sj_vacancies(lang, page, api_key)
@@ -49,12 +49,12 @@ def get_lang_statistic(lang, api_key):
         for vacancy in vacancies:
             salary = predict_rub_salary_sj(vacancy)
             if salary:
-                average_salaries += salary
+                average_salaries_amount += salary
                 vacancies_processed += 1
         page += 1
 
     try:
-        average_salary = average_salaries // vacancies_processed
+        average_salary = average_salaries_amount // vacancies_processed
     except ZeroDivisionError:
         average_salary = 0
 

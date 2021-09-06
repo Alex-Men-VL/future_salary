@@ -34,7 +34,7 @@ def predict_rub_salary_hh(vacancy):
 def get_lang_statistic(lang):
     page = 0
     pages_number = 1
-    average_salaries = 0
+    average_salaries_amount = 0
     vacancies_processed = 0
     while page < pages_number:
         lang_vacancies = get_hh_vacancies(lang, page)
@@ -45,12 +45,12 @@ def get_lang_statistic(lang):
         for vacancy in vacancies:
             salary = predict_rub_salary_hh(vacancy)
             if salary:
-                average_salaries += salary
+                average_salaries_amount += salary
                 vacancies_processed += 1
         page += 1
 
     try:
-        average_salary = average_salaries // vacancies_processed
+        average_salary = average_salaries_amount // vacancies_processed
     except ZeroDivisionError:
         average_salary = 0
 
